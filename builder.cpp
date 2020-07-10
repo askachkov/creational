@@ -1,5 +1,8 @@
 #include "builder.h"
 #include "factory.h"
+#include "adapter.h"
+#include "flyweight.h"
+#include "config.h"
 
 Director::Director()
 {
@@ -10,10 +13,34 @@ Director::Director()
 
 NodePtr Director::buidObject(INodeFactory & f)
 {
-    std::shared_ptr<Node> obj = f.createGroup();
+    std::shared_ptr<Node> objx = f.createGroup();
     for ( auto & i : m_Builders ){
-        obj->add(i->build(f));
+        objx->add(i->build(f));
     }
+
+    std::shared_ptr<Node> arr = f.createGroup();
+	arr->add( f.createNum(3) );
+	arr->add( f.createNum(4) );
+	arr->add( f.createNum(6) );
+
+	std::map<std::string, double> mapObject;
+	mapObject["height"] = 4.1;
+	mapObject["width"] = 2.4;
+	mapObject["depth"] = 2.2;
+
+	std::shared_ptr<Node> obj = f.createGroup();
+	obj->add(f.createPair("params", NodePtr(new MapAdapterNode(mapObject))) );
+	obj->add(f.createPair("key1", f.createString("big data")));
+	obj->add(f.createPair("key2", f.createString("big data")));
+	obj->add(f.createPair("key3", f.createString("big data 2")));
+	obj->add(f.createPair("nums", f.createArr(arr)));
+
+	obj->add(f.createPair("proxy", NodePtr( new ProxyNode<NumNode, int, 778>() ) ));
+
+	obj->add(f.createPair("builder", f.createObj(objx)));
+
+	std::shared_ptr<INode> res = f.createObj(obj);
+
     return f.createObj(obj);
 }
 

@@ -79,7 +79,6 @@ public:
 	void draw(IDrawer & d) override
 	{
 		if ( !m_Data ){
-			d.draw("\nProxy do it job!\n");
 			m_Data = NodePtr(new Node(value));
 		}
 		m_Data->draw(d);
