@@ -9,6 +9,7 @@ class INode
 public:
 	virtual ~INode(){}
 	virtual void draw(IDrawer & ) = 0;
+	virtual std::shared_ptr<INode> clone() const = 0;
 };
 
 typedef std::shared_ptr<INode> NodePtr;
@@ -19,6 +20,7 @@ class Node: public INode
 public:
 	void add(const NodePtr & node);
 	virtual void draw(IDrawer & ) override;
+	virtual std::shared_ptr<INode> clone() const override;
 
 private:
 	NodeList m_Children;
@@ -39,6 +41,10 @@ public:
 		m_Node->draw(d);
 		d.draw(close);
 	}
+	virtual std::shared_ptr<INode> clone() const override
+	{
+		return NodePtr( new WrapperNode<open, close>(m_Node->clone()) );
+	}
 };
 
 template<typename Value>
@@ -54,6 +60,10 @@ public:
 	{
 		d.draw(m_Value);
 	}
+	virtual std::shared_ptr<INode> clone() const override
+	{
+		return NodePtr( new ValueNode<Value>(m_Value) );
+	}
 };
 
 typedef WrapperNode<'{', '}'> ObjectNode;
@@ -68,7 +78,8 @@ class KeyValueNode: public INode
 	NodePtr m_Value;
 public:
 	KeyValueNode(const StringPtr & key, const NodePtr & value);
-	void draw(IDrawer & d) override;
+	virtual void draw(IDrawer & d) override;
+	virtual std::shared_ptr<INode> clone() const override;
 };
 
 template<typename Node, typename ValueType, ValueType value>
@@ -82,5 +93,9 @@ public:
 			m_Data = NodePtr(new Node(value));
 		}
 		m_Data->draw(d);
+	}
+	virtual std::shared_ptr<INode> clone() const override
+	{
+		return NodePtr( new ProxyNode<Node, ValueType, value>() );
 	}
 };

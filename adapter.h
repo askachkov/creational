@@ -28,4 +28,8 @@ public:
         }
         d.draw('}');
     }
+    std::shared_ptr<INode> clone()const
+    {
+        return std::shared_ptr<INode>(new MapAdapterNode(m_Object));
+    }
 };

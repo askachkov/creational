@@ -3,6 +3,7 @@
 #include "factory.h"
 #include "flyweight.h"
 #include "config.h"
+#include <iostream>
 
 void exec(INodeFactory & f, IDrawer & d)
 {
@@ -17,9 +18,8 @@ int main(int argc, char* argv[])
 	CashNodeFactory f;
 	Config::instance().set("APP_NAME", "CRE");
 
-	for ( int i = 0; i < 3; ++i ){
-		exec(f, d);
-	}
+	exec(f, d);
+	std::cout << std::endl;
 	return 0;
 }
 
