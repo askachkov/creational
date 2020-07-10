@@ -1,0 +1,3 @@
+/home/alex/private/lessons/creational/build/CMakeFiles/rebuild_cache.dir
+/home/alex/private/lessons/creational/build/CMakeFiles/cre_app.dir
+/home/alex/private/lessons/creational/build/CMakeFiles/edit_cache.dir
