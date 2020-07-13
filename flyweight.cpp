@@ -8,7 +8,7 @@ std::shared_ptr<StringNode> CashNodeFactory::createString(const std::string & s)
     if ( it != m_Cash.end() ){
         return it->second;
     }
-    //std::cout << "LOG [" << Config::instance().get("APP_NAME") << "]: added str: " << s << std::endl;
+    std::cout << "LOG [" << Config::instance().get("APP_NAME") << "]: added str: " << s << std::endl;
     auto res = Factory::createString(s);
     m_Cash[s] = res;
     return res;

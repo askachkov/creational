@@ -4,6 +4,25 @@
 #include "flyweight.h"
 #include "config.h"
 
+
+class HeaderBuilder: public IBuilder
+{
+public:
+    NodePtr build(INodeFactory & f) override;
+};
+
+class FooterBuilder: public IBuilder
+{
+public:
+    NodePtr build(INodeFactory & f) override;
+};
+
+class BodyBuilder: public IBuilder
+{
+public:
+    NodePtr build(INodeFactory & f) override;
+};
+
 Director::Director()
 {
     m_Builders.push_back( Ptr(new HeaderBuilder) );

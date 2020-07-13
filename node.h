@@ -12,6 +12,8 @@ public:
 	virtual std::shared_ptr<INode> clone() const = 0;
 };
 
+
+
 typedef std::shared_ptr<INode> NodePtr;
 typedef std::vector<NodePtr> NodeList;
 

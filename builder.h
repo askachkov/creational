@@ -21,20 +21,3 @@ private:
     std::vector<Ptr> m_Builders;
 };
 
-class HeaderBuilder: public IBuilder
-{
-public:
-    NodePtr build(INodeFactory & f) override;
-};
-
-class FooterBuilder: public IBuilder
-{
-public:
-    NodePtr build(INodeFactory & f) override;
-};
-
-class BodyBuilder: public IBuilder
-{
-public:
-    NodePtr build(INodeFactory & f) override;
-};
